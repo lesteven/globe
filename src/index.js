@@ -15,7 +15,7 @@ const url= 'https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/
 getData(url,drawGraph);
 
 function drawGraph(data){
-	console.log(data)
+	//console.log(data)
 	//variable holding svg attributes
 	const width = 1200;
 	const height = 600;
@@ -41,7 +41,7 @@ function drawGraph(data){
 		svg.append('path')
 			.attr('d',path(mapData))
 	})
-	
+	console.log(data.features)
 	svg.selectAll('circle')
 		.data(data.features).enter()
 		.append('circle')
@@ -53,7 +53,7 @@ function drawGraph(data){
 			}
 		})
 		.attr('cy',function(d){if(d.geometry)return projection(d.geometry.coordinates)[1]})
-		.attr('r','3px')
+		.attr('r', function(d){if(d.geometry)return Math.cbrt(d.properties.mass)/12})
 		.attr('fill','red')
 	
 }

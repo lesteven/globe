@@ -3,18 +3,22 @@ body{
 	background-color:#e5e5ff;
 }
 .graph{
+	position: relative;
 	border-color: black;
 	border-style: solid;
 	height:100%;
 	width:100%;
-	
+	z-index:-1;
 }
 path{
+	position: relative;
 	stroke:white;
 	stroke-width:.25px;
 	fill:#006600;
-	opacity:0.1;
+	z-index: 0;
+	opacity:0.2;
 }
 circle{
-	z-index: 2;
+	position: relative;
+	z-index: 1;
 }
