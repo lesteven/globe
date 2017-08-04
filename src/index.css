@@ -4,4 +4,6 @@ body{
 .graph{
 	border-color: black;
 	border-style: solid;
+	height:100%;
+	width:100%;
 }

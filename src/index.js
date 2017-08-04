@@ -6,24 +6,18 @@ import {
 	event} from 'd3-selection';
 import {transition} from 'd3-transition';
 import {geoMercator,geoPath,projection} from 'd3-geo';
+import getData from './fetch.js';
 require('./index.css');
 
 const url= 'https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/meteorite-strike-data.json'
+//const map = 'https://raw.githubusercontent.com/d3/d3.github.com/master/world-110m.v1.json'
 
-getData(url)
+getData(url,drawGraph);
 
-function getData(url){
-	fetch(url)
-	.then(response=>response.json())
-	.then(data=>{
-		drawGraph(data)
-	})
-}
 function drawGraph(data){
-	console.log(data)
 	//variable holding svg attributes
-	const width = 950;
-	const height = 550;
+	const width = 1200;
+	const height = 600;
 
 	//creates svg
 	let svg = select('body')
@@ -33,8 +27,18 @@ function drawGraph(data){
 		.attr('class','graph');
 
 	let projection = geoMercator()
-		.scale(width/2 /Math.PI)
+		.scale(width/7)
 		.translate([width/2,height/2])
-	let path = geoPath().projection(projection)
+	let path = geoPath()
+		.projection(projection)
+
+	const map= 'http://enjalot.github.io/wwsd/data/world/world-110m.geojson'
 	
+	//inser map
+	getData(map,function(mapData){
+		console.log(mapData)
+		svg.append('path')
+			.attr('d',path(mapData))
+	})
+
 }
