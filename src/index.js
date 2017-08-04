@@ -15,6 +15,7 @@ const url= 'https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/
 getData(url,drawGraph);
 
 function drawGraph(data){
+	console.log(data)
 	//variable holding svg attributes
 	const width = 1200;
 	const height = 600;
@@ -34,11 +35,25 @@ function drawGraph(data){
 
 	const map= 'http://enjalot.github.io/wwsd/data/world/world-110m.geojson'
 	
-	//inser map
+	//insert map
 	getData(map,function(mapData){
-		console.log(mapData)
+		//console.log(mapData)
 		svg.append('path')
 			.attr('d',path(mapData))
 	})
-
+	
+	svg.selectAll('circle')
+		.data(data.features).enter()
+		.append('circle')
+		.attr('cx',function(d){
+			if(d.geometry){	
+				//console.log(projection(d.geometry.coordinates)[0])	
+				//console.log(d.geometry.coordinates[0])
+				return projection(d.geometry.coordinates)[0]
+			}
+		})
+		.attr('cy',function(d){if(d.geometry)return projection(d.geometry.coordinates)[1]})
+		.attr('r','3px')
+		.attr('fill','red')
+	
 }
