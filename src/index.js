@@ -36,24 +36,46 @@ function drawGraph(data){
 	const map= 'http://enjalot.github.io/wwsd/data/world/world-110m.geojson'
 	
 	//insert map
+	
 	getData(map,function(mapData){
 		//console.log(mapData)
 		svg.append('path')
 			.attr('d',path(mapData))
-	})
-	console.log(data.features)
-	svg.selectAll('circle')
-		.data(data.features).enter()
-		.append('circle')
-		.attr('cx',function(d){
-			if(d.geometry){	
-				//console.log(projection(d.geometry.coordinates)[0])	
-				//console.log(d.geometry.coordinates[0])
-				return projection(d.geometry.coordinates)[0]
-			}
+			//shows data on mousehover
+		let div = select('body')
+			.append('div')
+			.attr('class','tooltip')
+			.style('opacity',0);
+
+		//console.log(data.features)
+		svg.selectAll('circle')
+			.data(data.features)
+			.enter().append('circle')
+				.attr('cx',function(d){if(d.geometry)	return projection(d.geometry.coordinates)[0]})
+				.attr('cy',function(d){if(d.geometry)return projection(d.geometry.coordinates)[1]})
+				.attr('r', function(d){return Math.cbrt(d.properties.mass)/12})
+				.style('fill','orange')
+				.on('mouseover',function(d){
+					div.transition()
+						.duration(200)
+						.style('opacity',.9)
+					div.html(
+						'Fall: ' + d.properties.fall + '</br>' +
+						'Mass: ' + d.properties.mass + '</br>' +
+						'Name: ' + d.properties.name + '</br>' +
+						'Nametype: ' + d.properties.nametype + '</br>' +
+						'Recclass: ' + d.properties.recclass + '</br>' +
+						'Reclat: ' + d.properties.reclat + '</br>' +
+						'year: ' + d.properties.year + '</br>' 
+						)
+						.style('left',(event.pageX +40)+'px')
+						.style('top',(event.pageY-100)+'px')
+					
+				})
+				.on('mouseout',function(d){
+					div.transition()
+						.duration(500)
+						.style('opacity',0)
+				})
 		})
-		.attr('cy',function(d){if(d.geometry)return projection(d.geometry.coordinates)[1]})
-		.attr('r', function(d){if(d.geometry)return Math.cbrt(d.properties.mass)/12})
-		.attr('fill','red')
-	
 }

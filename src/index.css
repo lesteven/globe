@@ -3,7 +3,6 @@ body{
 	background-color:#e5e5ff;
 }
 .graph{
-	position: relative;
 	border-color: black;
 	border-style: solid;
 	height:100%;
@@ -11,14 +10,23 @@ body{
 	z-index:-1;
 }
 path{
-	position: relative;
 	stroke:white;
 	stroke-width:.25px;
 	fill:#006600;
 	z-index: 0;
-	opacity:0.2;
+	opacity: .5;
 }
 circle{
-	position: relative;
 	z-index: 1;
+	opacity:0.7;
+}
+circle:hover{
+	fill:blue;
+}
+div{
+	color:white;
+	background-color:#004c4c;
+	padding:1%;
+	border-radius:5px;
+	position:absolute;
 }
