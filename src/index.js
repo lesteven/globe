@@ -33,7 +33,7 @@ function drawGraph(data){
 	let path = geoPath()
 		.projection(projection)
 
-	const map= 'http://enjalot.github.io/wwsd/data/world/world-110m.geojson'
+	const map= 'https://enjalot.github.io/wwsd/data/world/world-110m.geojson'
 	
 	//insert map
 	
